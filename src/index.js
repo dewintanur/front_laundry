@@ -1,12 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import Trial from './components/trial';
+
+import Member from './pages/member';
+import User from './pages/user';
+import Paket from './pages/paket';
+import Transaksi from './pages/transaksi';
+import FormTransaksi from './pages/formTransaksi';
+
+import "bootstrap/dist/css//bootstrap.css"
+import "bootstrap/dist/js/bootstrap.bundle"
+
+import Login from "./pages/login"
 
 ReactDOM.render(
+  // Routing,
   <React.StrictMode>
+    {/* <Trial title="Hallo Mokleters" subtitle=""/>
+    <Trial title="Hallo HAI" subtitle="OMAYGAT"/>
+    <Trial title="Hallo HIHI"/> */}
     <App />
+    {/* <Login /> */}
+    {/* <Member/> */}
+    {/* <User /> */}
+    {/* <Paket /> */}
+    {/* <Transaksi /> */}
+    {/* <FormTransaksi/> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
