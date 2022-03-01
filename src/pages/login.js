@@ -27,7 +27,7 @@ class Login extends React.Component {
                     )
 
                     window.alert("Happy Laundry:)")
-                    window.location.href = "/member"
+                    window.location.href = "/"
 
                 } else {
                     window.alert("Whooops!, wrong username and password")

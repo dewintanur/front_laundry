@@ -18,6 +18,15 @@
 .bg-nAvbar{
   background-color: #96CEB4;
 }
+#ubah{
+  background-color: #F6D860;
+}
+#delete{
+  background-color: #EA5C2B;
+}
+#tambah{
+  background-color: #95CD41;
+}
 .logo{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-style: oblique;
@@ -29,6 +38,24 @@ img {
   object-fit: cover;
   margin-left: 15pt;
 }
+.bg-pAket{
+  background-color: #D06224;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.bg-mEmber{
+  background-color: #E9C891;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.bg-tRansaksi{
+  background-color: #AE431E;
+}
+.bg-incomE{
+  background-color:#8A8635;
+}
+/* .App {
+  width: 100vw;
+  height: 100vh;
+} */
 /* .App {
   text-align: center;
 }

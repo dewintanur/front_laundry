@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Modal } from "bootstrap";
 import "../App.css"
+import { baseUrl,authorization } from "../config";
 
 export default class FormTransaksi extends React.Component {
     constructor() {
@@ -26,16 +27,16 @@ export default class FormTransaksi extends React.Component {
     }
 
     getMember() {
-        let endpoint = "http://localhost:8000/member"
-        axios.get(endpoint)
+        let endpoint = `${baseUrl}/member`
+        axios.get(endpoint, authorization)
             .then(response => {
                 this.setState({ members: response.data })
             })
             .catch(error => console.log(error))
     }
     getPaket() {
-        let endpoint = "http://localhost:8000/paket"
-        axios.get(endpoint)
+        let endpoint = `${baseUrl}/paket`
+        axios.get(endpoint, authorization)
             .then(response => {
                 this.setState({ pakets: response.data })
             })
@@ -101,7 +102,7 @@ export default class FormTransaksi extends React.Component {
         }
     }
     simpanTransaksi() {
-        let endpoint = "http://localhost:8000/transaksi"
+        let endpoint = `${baseUrl}/transaksi`
         let user = JSON.parse(localStorage.getItem("user"))
         let newData = {
             id_member: this.state.id_member,
@@ -112,7 +113,7 @@ export default class FormTransaksi extends React.Component {
             id_user: user.id_user,
             detail_transaksi: this.state.detail_transaksi
         }
-        axios.post(endpoint, newData)
+        axios.post(endpoint, newData, authorization)
             .then(response => {
                 window.alert(response.data.message)
             })
@@ -154,7 +155,7 @@ export default class FormTransaksi extends React.Component {
                             <option value={true}>Sudah Dibayar</option>
                             <option value={false}>Belum Dibayar</option>
                         </select>
-                        <button className="btn btn-success" onClick={() => this.addPaket()}>Tambah Paket
+                        <button id="tambah"className="btn" onClick={() => this.addPaket()}>Tambah Paket
                         </button>
                         {/* tampilkan isi detail */}
                         <h5>Detail Transaksi</h5>
@@ -177,7 +178,7 @@ export default class FormTransaksi extends React.Component {
                                     Rp {detail.harga * detail.qty}
                                 </div>
                                 <div className="col-lg-2" >
-                                    <button className="btn btn-danger btn-sm"
+                                    <button id="delete"className="btn btn-danger btn-sm"
                                         onClick={() => this.hapusData(detail.id_paket)}>
                                         Hapus
                                     </button>
@@ -213,7 +214,7 @@ export default class FormTransaksi extends React.Component {
                                             <input type="number" className="form-control mb-2" value={this.state.qty}
                                                 onChange={e => this.setState({ qty: e.target.value })} />
 
-                                            <button type="submit" className="btn btn-success">
+                                            <button type="submit" id="tambah"className="btn btn-success">
                                                 Tambah
                                             </button>
                                         </form>

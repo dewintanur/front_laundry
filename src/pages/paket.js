@@ -2,6 +2,8 @@ import { Modal } from "bootstrap";
 import React from "react";
 import axios from "axios";
 import "../App.css"
+import { baseUrl,authorization } from "../config";
+
 class Paket extends React.Component {
     constructor() {
         super()
@@ -49,7 +51,7 @@ class Paket extends React.Component {
         // cek aksi tambah atau ubah
         if (this.state.action === "tambah") {
             // menampung data dari pengguna
-            let endpoint = "http://localhost:8000/paket"
+            let endpoint = `${baseUrl}/paket`
             let newPaket = {
                 id_paket: this.state.id_paket,
                 jenis_paket: this.state.jenis_paket,
@@ -61,7 +63,7 @@ class Paket extends React.Component {
             temp.push(newPaket)
 
             // this.setState({pakets : temp })
-            axios.post(endpoint, newPaket)
+            axios.post(endpoint, newPaket, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -82,9 +84,9 @@ class Paket extends React.Component {
                 jenis_paket: this.state.jenis_paket,
                 harga: this.state.harga
             }
-            let endpoint = "http://localhost:8000/paket"
+            let endpoint = `${baseUrl}/paket`
             // this.setState({ pakets: temp });
-            axios.put(endpoint, newPaket)
+            axios.put(endpoint, newPaket, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -118,8 +120,8 @@ class Paket extends React.Component {
             // temp.splice(index, 1);
 
             // this.setState({ pakets: temp });
-            let endpoint = "http://localhost:8000/paket/" + id_paket
-            axios.delete(endpoint)
+            let endpoint = `${baseUrl}/paket/` + id_paket
+            axios.delete(endpoint, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -128,8 +130,8 @@ class Paket extends React.Component {
         }
     }
     getData() {
-        let endpoint = "http://localhost:8000/paket"
-        axios.get(endpoint)
+        let endpoint = `${baseUrl}/paket`
+        axios.get(endpoint, authorization)
             .then(response => {
                 this.setState({ pakets: response.data })
             })
@@ -163,7 +165,7 @@ class Paket extends React.Component {
                     </div>
                     <div className="card-body">
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button className={`btn btn-success mx-2.5 mb-3 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.tambahData()}>Tambah Paket</button>
+                            <button className={`btn btn-success mx-2.5 mb-3 ${this.state.visible ? `` : `d-none`}y`} onClick={() => this.tambahData()}>Tambah Paket</button>
                         </div>
                         <ul className="list-group">
                             {this.state.pakets.map(paket => (

@@ -1,6 +1,7 @@
 import { Modal } from "bootstrap";
 import React from "react";
 import axios from "axios";
+import { baseUrl, authorization } from '../config'
 
 class User extends React.Component {
   constructor() {
@@ -60,7 +61,7 @@ class User extends React.Component {
     this.modalUser.hide();
 
     if (this.state.action === "tambah") {
-      let endpoint = "http://localhost:8000/users"
+      let endpoint = `${baseUrl}/users`
       let newUser = {
         id_user: this.state.id_user,
         nama: this.state.nama,
@@ -72,7 +73,7 @@ class User extends React.Component {
       temp.push(newUser);
 
       // this.setState({ users: temp });
-      axios.post(endpoint, newUser)
+      axios.post(endpoint, newUser, authorization)
         .then(response => {
           window.alert(response.data.message)
           this.getData()
@@ -80,7 +81,7 @@ class User extends React.Component {
         .catch(error => console.log(error))
     } else if (this.state.action === "ubah") {
       this.modalUser.hide();
-      let endpoint = "http://localhost:8000/users/" + this.state.id_user
+      let endpoint = `${baseUrl}/users/` + this.state.id_user
       let newUser = {
         id_user: this.state.id_user,
         nama: this.state.nama,
@@ -88,7 +89,7 @@ class User extends React.Component {
         password: this.state.password,
         role: this.state.role,
       };
-      axios.put(endpoint, newUser)
+      axios.put(endpoint, newUser, authorization)
         .then(response => {
           window.alert(response.data.message)
           this.getData()
@@ -124,15 +125,15 @@ class User extends React.Component {
       username: this.state.users[index].username,
       password: this.state.users[index].password,
       action: "ubah",
-      role:"",
-      visible:""
+      role: "",
+      visible: ""
     });
   }
 
   hapusData(id_user) {
     if (window.confirm("Apakah anda yakin ingin menghapus data ini?")) {
-      let endpoint = "http://localhost:8000/users/" + id_user
-      axios.delete(endpoint)
+      let endpoint = `${baseUrl}/users/` + id_user
+      axios.delete(endpoint, authorization)
         .then(response => {
           window.alert(response.data.message)
           this.getData()
@@ -150,8 +151,8 @@ class User extends React.Component {
     }
   }
   getData() {
-    let endpoint = "http://localhost:8000/users"
-    axios.get(endpoint)
+    let endpoint = `${baseUrl}/users`
+    axios.get(endpoint, authorization)
       .then(response => {
         this.setState({ users: response.data })
       })

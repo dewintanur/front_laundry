@@ -4,7 +4,8 @@ import { Modal } from "bootstrap";
 import { event } from "jquery";
 import axios from "axios";
 import "../App.css"
-import { baseUrl } from "../config";
+
+import { baseUrl, authorization } from "../config";
 class Member extends React.Component {
     constructor() {
         super()
@@ -57,7 +58,7 @@ class Member extends React.Component {
         this.modalMember.hide()
         // cek aksi tambah atau ubah
         if (this.state.action === "tambah") {
-            let endpoint = "http://localhost:8000/member"
+            let endpoint = `${baseUrl}/member`
             // menampung data dari pengguna
             let newMember = {
                 id_member: this.state.id_member,
@@ -71,7 +72,7 @@ class Member extends React.Component {
             temp.push(newMember)
 
             // this.setState({members : temp })
-            axios.post(endpoint, newMember)
+            axios.post(endpoint, newMember, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -79,7 +80,7 @@ class Member extends React.Component {
                 .catch(error => console.log(error))
         } else if (this.state.action === "ubah") {
             this.modalMember.hide();
-            let endpoint = "http://localhost:8000/member/" + this.state.id_member
+            let endpoint = `${baseUrl}/member/` + this.state.id_member
             let newMember = {
                 id_member: this.state.id_member,
                 nama: this.state.nama,
@@ -88,7 +89,7 @@ class Member extends React.Component {
                 jenis_kelamin: this.state.jenis_kelamin
             }
 
-            axios.put(endpoint, newMember)
+            axios.put(endpoint, newMember, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -138,7 +139,7 @@ class Member extends React.Component {
             // temp.splice(index, 1)
 
             // this.setState({members: temp})
-            axios.delete(endpoint)
+            axios.delete(endpoint,authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -149,7 +150,7 @@ class Member extends React.Component {
 
     getData() {
         let endpoint = `${baseUrl}/member`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
             .then(response => {
                 this.setState({ members: response.data })
             })
@@ -177,7 +178,7 @@ class Member extends React.Component {
     showAddButton(){
         if (this.state.role === 'admin' || this.state.role ===  'kasir'){
             return (
-                <button type="button" class="btn btn-outline-dark"
+                <button type="button" id="tambah" class="btn"
                 onClick={() => this.tambahData()}>
                     Tambah Data Member
                 </button>
@@ -217,8 +218,8 @@ class Member extends React.Component {
                                         </div>
                                         {/* bagian untuk button */}
                                         <div className="col-lg-2">
-                                            <button className={`btn btn-warning mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`}  onClick={() => this.ubahData(member.id_member)}>Ubah</button>
-                                            <button className={`btn btn-danger mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}>Hapus</button>
+                                            <button id="ubah"className={`btn btn-warning mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`}  onClick={() => this.ubahData(member.id_member)}>Ubah</button>
+                                            <button id="delete"className={`btn mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}>Hapus</button>
                                         </div>
                                         {/* bagian untuk alamat */}
                                         <div className="col-lg-12">

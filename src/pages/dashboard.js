@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { baseUrl } from "../config";
-import { formatNumber } from "../config";
-
+import { formatNumber,authorization } from "../config";
+import '../App.css'
 export default class Dashboard extends React.Component{
     constructor(){
         super()
@@ -20,7 +20,7 @@ export default class Dashboard extends React.Component{
 
     getSummary(){
         let endpoint = `${baseUrl}/member`
-        axios.get(endpoint)
+        axios.get(endpoint,authorization)
         .then(response =>{
             this.setState({jumlahMember: response.data.length})
         })
@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component{
 
         // paket
        endpoint = `${baseUrl}/paket`
-       axios.get(endpoint)
+       axios.get(endpoint,authorization)
        .then(response => {
            this.setState({jumlahPaket: response.data.length})
        })
@@ -36,7 +36,7 @@ export default class Dashboard extends React.Component{
 
        //transaksi
        endpoint = `${baseUrl}/transaksi`
-       axios.get(endpoint)
+       axios.get(endpoint,authorization)
        .then(response => {
            let dataTransaksi = response.data
            let income = 0
@@ -65,17 +65,17 @@ export default class Dashboard extends React.Component{
              <div className="container-fluid">
                  <div className="row">
                      <div className="col-lg-4 col-md-6">
-                         <div className="card text-center bg-primary m-1">
-                             <div className="card-body">
-                                 <h4 className="card-title text-white">Jumlah Paket</h4>
-                                 <h2 className="text-white">{this.state.jumlahPaket}</h2>
-                                 <h6 className="text-white">Jenis yang tersedia</h6>
+                         <div className="card text-center m-1">
+                             <div className="card-body bg-pAket">
+                                 <h4 className="card-title">Jumlah Paket</h4>
+                                 <h2 className="">{this.state.jumlahPaket}</h2>
+                                 <h6 className="">Jenis yang tersedia</h6>
                              </div>
                          </div>
                      </div>
                      <div className="col-lg-4 col-md-6">
-                         <div className="card text-center bg-primary m-1">
-                             <div className="card-body">
+                         <div className="card text-center m-1">
+                             <div className="card-body bg-mEmber">
                                  <h4 className="card-title text-white">Jumlah Member</h4>
                                  <h2 className="text-white">{this.state.jumlahMember}</h2>
                                  <h6 className="text-white">Jenis yang tersedia</h6>
@@ -83,8 +83,8 @@ export default class Dashboard extends React.Component{
                          </div>
                      </div>
                      <div className="col-lg-4 col-md-6">
-                         <div className="card text-center bg-primary m-1">
-                             <div className="card-body">
+                         <div className="card text-center  m-1">
+                             <div className="card-body bg-tRansaksi">
                                  <h4 className="card-title text-white">Jumlah Transaksi</h4>
                                  <h2 className="text-white">{this.state.jumlahTransaksi}</h2>
                                  <h6 className="text-white">Jenis yang tersedia</h6>
@@ -92,8 +92,8 @@ export default class Dashboard extends React.Component{
                          </div>
                          </div>
                          <div className="col-lg-6">
-                             <div className="card bg-success m-1">
-                                 <div className="card-body">
+                             <div className="card  m-1">
+                                 <div className="card-body bg-incomE">
                                  <h4 className="card-title text-white">
                                      Income
                                  </h4>
