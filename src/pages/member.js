@@ -1,30 +1,17 @@
 import React from "react";
-
 import { Modal } from "bootstrap";
-import { event } from "jquery";
 import axios from "axios";
 import "../App.css"
+import { Row, Col } from 'react-bootstrap'
 
 import { baseUrl, authorization } from "../config";
 class Member extends React.Component {
     constructor() {
         super()
         this.state = {
-            members: [
-                {
-                    id_member: "111", nama: "Johnny Yes Papa",
-                    alamat: "Jln. bersamamu", jenis_kelamin: "Pria", telepon: "08925293462"
-                },
-                {
-                    id_member: "112", nama: "Mary Yes Mama",
-                    alamat: "Jln. berdua", jenis_kelamin: "Wanita", telepon: "0146729003462"
-                },
-                {
-                    id_member: "113", nama: "Suga No Papa",
-                    alamat: "Jln. bersatu", jenis_kelamin: "Pria", telepon: "019874890575"
-                }
-            ],
-
+            members: [],
+            masterPack:[],
+            search:"",
             id_member: "",
             nama: "",
             alamat: "",
@@ -32,7 +19,7 @@ class Member extends React.Component {
             jenis_kelamin: "",
             action: "", /* utk menyimpan aksi dari tambah atau ubah data */
             role: "",
-            visible:""
+            visible: ""
 
         }
         if (!localStorage.getItem("token")) {
@@ -47,7 +34,7 @@ class Member extends React.Component {
 
         // mengosongkan inputannya
         this.setState({
-            nama: "", alamat: "", telepon: "", jenis_kelamin: "Wanita", id_member: Math.random(1, 1000000), action: "tambah"
+            nama: "", alamat: "", telepon: "", jenis_kelamin: "", id_member: Math.random(1, 1000000), action: "tambah"
         })
     }
 
@@ -95,17 +82,6 @@ class Member extends React.Component {
                     this.getData()
                 })
                 .catch(error => console.log(error))
-            //   mencari posisi index dari data member berdasarkan id_member nya pada array 'members'
-            //   let index = this.state.members.findIndex(
-            //     (member) => member.id_member === this.state.id_member
-            //   )
-            //   let temp = this.state.members
-            //   temp[index].nama = this.state.nama
-            //   temp[index].alamat = this.state.alamat
-            //   temp[index].telepon = this.state.telepon
-            //   temp[index].jenis_kelamin = this.state.jenis_kelamin
-
-            //   this.setState({members:temp})
         }
 
     }
@@ -125,12 +101,14 @@ class Member extends React.Component {
             telepon: this.state.members[index].telepon,
             action: "ubah"
         })
+
     }
+
 
     hapusData(id_member) {
         if (window.confirm("Apakah anda yakin ingin menghapus data ini?")) {
             // mencari posisi index dari data yang akan dihapus
-            let endpoint = `${baseUrl}/member` + id_member
+            let endpoint = `${baseUrl}/member/` + id_member
             // let temp = this.state.members
             // let index = temp.findIndex(
             //     member => member.id_member === id_member
@@ -139,7 +117,7 @@ class Member extends React.Component {
             // temp.splice(index, 1)
 
             // this.setState({members: temp})
-            axios.delete(endpoint,authorization)
+            axios.delete(endpoint, authorization)
                 .then(response => {
                     window.alert(response.data.message)
                     this.getData()
@@ -153,8 +131,19 @@ class Member extends React.Component {
         axios.get(endpoint, authorization)
             .then(response => {
                 this.setState({ members: response.data })
+                this.setState({masterPack: response.data})
             })
             .catch(error => console.log(error))
+    }
+
+    searching(ev){
+        let code = ev.keyCode;
+        if(code === 13){
+            let data = this.state.masterPack;
+            let found = data.filter( it =>
+                it.nama.toLowerCase().includes(this.state.search.toLocaleLowerCase()))
+                this.setState({members : found});
+        }
     }
     componentDidMount() {
         // fungsi ini dijalankan setelah fungsi render berjalan
@@ -164,9 +153,9 @@ class Member extends React.Component {
             role: user.role
         })
         // cara kedua
-        if(user.role === 'admin' || user.role === 'kasir'){
+        if (user.role === 'admin' || user.role === 'kasir') {
             this.setState({
-                visible:true
+                visible: true
             })
         } else {
             this.setState({
@@ -175,11 +164,11 @@ class Member extends React.Component {
         }
 
     }
-    showAddButton(){
-        if (this.state.role === 'admin' || this.state.role ===  'kasir'){
+    showAddButton() {
+        if (this.state.role === 'admin' || this.state.role === 'kasir') {
             return (
                 <button type="button" id="tambah" class="btn"
-                onClick={() => this.tambahData()}>
+                    onClick={() => this.tambahData()}>
                     Tambah Data Member
                 </button>
             )
@@ -188,89 +177,123 @@ class Member extends React.Component {
     render() {
         return (
             <div className="container-fluid" id="style-container">
-                <div className="card" >
-                    <div className="card-header" id="bg-cardHeader">
-                        <h4 className="text-body">List Daftar Member</h4>
-                    </div>
-                    <div className="card-body">
-                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                            {/* <button className="btn btn-success mx-2.5 mb-3" onClick={() => this.tambahData()}>Tambah Data</button> */}
-                            {this.showAddButton}
+
+                <Row>
+                    <Col>
+                        <h4 className="text-center display-2">Member Data</h4>
+                    </Col>
+                </Row>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="col-4">
+                            <input className="form-control" type="text" placeholder="Cari Data Member" value={this.state.search} onChange={ev => this.setState({ search: ev.target.value })}
+                                onKeyUp={(ev) => this.searching(ev)} ></input>
                         </div>
-                        <ul className="list-group">
-                            {this.state.members.map(member => (
-                                <li className="list-group-item mb-3 mt-2">
-                                    <div className="row" id="style-listGroup">
+                        <div className="col-4"></div>
+                        <div className="col-4">
+                            <div className="float-end">
+                                <button className={`btn mx-2.5 mb-3 ${this.state.visible ? `` : `d-none`}`} id="tambah" onClick={() => this.tambahData()}><i class="fa-solid fa-plus" id="iconTambah"></i>Tambah Data</button>
+                                {this.showAddButton}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+
+                    </div>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                    </div>
+                    <div className="row">
+                        {this.state.members.map(member => (
+                            <div className="col-lg-6">
+                                <div className="card" id="cardMember">
+                                    <Row>
+                                        {/* icon */}
+                                        <div className="col-lg-2" >
+                                            <i id="icnMember" class="fa-solid fa-circle-user"></i>
+                                        </div>
                                         {/* bagian untuk nama */}
-                                        <div className="col-lg-4">
-                                            <small className="text-primary">Nama</small> <br />
-                                            {member.nama}
+                                        <div className="col-lg-4" id="dataMember">
+                                            <strong className="judul">Nama</strong> <br />
+                                            {member.nama} <br />
+                                            {/* bagian untuk alamat */}
+                                            <strong className="judul">Alamat</strong> <br />
+                                            {member.alamat}
                                         </div>
                                         {/* bagian untuk jenis_kelamin */}
-                                        <div className="col-lg-2">
-                                            <small className="text-primary">Gender</small> <br />
-                                            {member.jenis_kelamin}
-                                        </div>
-                                        {/* bagian untuk telepon */}
-                                        <div className="col-lg-4">
-                                            <small className="text-primary">Telepon</small> <br />
+                                        <div className="col-lg-4" id="dataMember">
+                                            <strong className="judul">Gender</strong> <br />
+                                            {member.jenis_kelamin}<br />
+                                            {/* bagian untuk telepon */}
+                                            <strong className="judul">Telepon</strong> <br />
                                             {member.telepon}
                                         </div>
                                         {/* bagian untuk button */}
                                         <div className="col-lg-2">
-                                            <button id="ubah"className={`btn btn-warning mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`}  onClick={() => this.ubahData(member.id_member)}>Ubah</button>
-                                            <button id="delete"className={`btn mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}>Hapus</button>
+                                            <button id="ubah" className={`btn btn-warning mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(member.id_member)}>
+                                                <i class="fa-solid fa-pen-to-square"></i>
+
+                                            </button>
+                                            <button id="delete" className={`btn mx-2 mt-4 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}>
+                                                <i class="fa-solid fa-trash-can"></i></button>
                                         </div>
-                                        {/* bagian untuk alamat */}
-                                        <div className="col-lg-12">
-                                            <small className="text-primary">Alamat</small> <br />
-                                            {member.alamat}
-                                        </div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                                    </Row>
 
 
-                    {/* form modal member */}
-                    <div className="modal" id="modal-member">
-                        <div className="modal-dialog modal-md">
-                            <div className="modal-content">
-                                <div className="modal-header" id="bg-cardHeaderForm">
-                                    <h4 className="text-body">
-                                        Form Member
-                                    </h4>
                                 </div>
-                                <div className="modal-body">
-                                    <form onSubmit={ev => this.simpanData(ev)}>
-                                        Nama
-                                        <input type="text" className="form-control mb-2"
-                                            value={this.state.nama} onChange={ev => this.setState({ nama: ev.target.value })}
-                                            required />
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
-                                        Alamat
-                                        <input type="text" className="form-control mb-2"
+
+                {/* form modal member */}
+                <div className="modal" id="modal-member">
+                    <div className="modal-dialog modal-md">
+                        <div className="modal-content">
+                            <div className="modal-header" id="container-member">
+                                <h4 className="title">
+                                    Form Member
+                                </h4>
+                            </div>
+                            <div className="modal-body" >
+                                <form onSubmit={ev => this.simpanData(ev)}>
+                                    <div className="trans-detail">
+                                    <span className="details">Nama</span>
+                                    <input type="text" className="form-control  input" minLength={10} maxLength={25} placeholder="10 to 25 characters"
+                                        value={this.state.nama} onChange={ev => this.setState({ nama: ev.target.value })}
+                                        required />
+                                    <div className="input-box">
+                                        <span className="details">Alamat</span>
+                                            <input type="text" className="form-control input" minLength={10} maxLength={25} placeholder="10 to 25 characters"
                                             value={this.state.alamat} onChange={ev => this.setState({ alamat: ev.target.value })}
                                             required />
-
-                                        Telepon
-                                        <input type="text" className="form-control mb-2"
+                                    </div>
+                                    <div className="input-box">
+                                        <span className="details">Telepon</span>
+                                            <input type="text" className="form-control  input" minLength={12} maxLength={12} placeholder="12 characters"
                                             value={this.state.telepon} onChange={ev => this.setState({ telepon: ev.target.value })}
                                             required />
+                                    </div>
+                                    </div>
+                                    Jenis Kelamin
+                                    <select required
+                                    className="form-control mb-2"
+                                    value={this.state.jenis_kelamin}
+                                    onChange={(ev) => this.setState({ jenis_kelamin: ev.target.value })}>
+                                        <option value=""> Pilih Gender</option>
+                                        <option value="Pria">Pria</option>
+                                        <option value="Wanita">Wanita</option>
+                                    </select>
 
-                                        Jenis Kelamin
-                                        <select className="form-control mb-2" value={this.state.jenis_kelamin} onChange={ev => this.setState({ jenis_kelamin: ev.target.value })}>
-                                            <option value="Pria">Pria</option>
-                                            <option value="Wanita">Wanita</option>
-                                        </select>
-                                        <button className="btn btn-success btn-sm" type="submit">Simpan</button>
-                                    </form>
-                                </div>
+
+                                    <button className="btn btn-success btn-sm" type="submit">Simpan</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         )
     }

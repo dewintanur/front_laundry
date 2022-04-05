@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import logo from "./logoo.png"
+import { NavLink, Link } from "react-router-dom";
+import logo from "./img/logBran.png"
+import './App.css'
 
 function Logout() {
     // remove data token dan user dari local storage
@@ -9,61 +10,42 @@ function Logout() {
 }
 
 export default function Navbar(props) {
+    let halo = JSON.parse(localStorage.getItem(`user`));
     return (
         <div>
-
-            <nav className="navbar navbar-expand-lg navbar-light bg-nAvbar">
-                <div className="container-fluid">
-                    {/* brand */}
-                    <a href="/" className="navbar-brand">
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">
                         <img src={logo} class="img" /></a>
-                    {/* button toggler */}
-                    <button className="navbar-toggler"
-                        data-bs-toggle="collapse" data-bs-target="#myNav">
-                        <span className="navbar-toggler-icon"></span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav" aria-controls="myNav">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-
-                    {/* define menus */}
-                    <div className="collapse navbar-collapse" id="myNav">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link to="/Member" className="nav-link" >
-                                    Member
-                                </Link>
+                    <div class="collapse navbar-collapse" id="myNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <NavLink className="nav-link" to="/Member">Member</NavLink>
                             </li>
-
                             <li className="nav-item">
-                                <Link to="/User" className="nav-link" >
-                                    User
-                                </Link>
+                                <NavLink className="nav-link" to="/User">User</NavLink>
                             </li>
-
                             <li className="nav-item">
-                                <Link to="/Paket" className="nav-link" >
-                                    Package
-                                </Link>
+                                <NavLink className="nav-link" to="/Paket">Package</NavLink>
                             </li>
-
                             <li className="nav-item">
-                                <Link to="/Transaksi" className="nav-link" >
-                                    Transaction
-                                </Link>
+                                <NavLink className="nav-link" to="/Transaksi">Transaction</NavLink>
                             </li>
-
                             <li className="nav-item">
-                                <Link to="/FormTransaksi" className="nav-link" >
-                                    New Transaction
-                                </Link>
-                            </li>
-
-                            <li className="nav-item">
-                                <Link
-                                    to="/Login" className="nav-link"
-                                    onClick={() => Logout()} >
-                                    Logout
-                                </Link>
+                                <NavLink className="nav-link " to="/FormTransaksi">New Transaction</NavLink>
                             </li>
                         </ul>
+
+                        <form class="d-flex">
+                            <h6 className="mt-2"><i class="fa-solid fa-user-group"></i> {halo.role} {halo.username}</h6>
+                            <Link
+                                to="/Login" className="nav-link text-dark"
+                                onClick={() => Logout()} ><i class="fa-solid fa-right-to-bracket"></i>
+                            </Link>
+                        </form>
                     </div>
                 </div>
             </nav>

@@ -2,7 +2,7 @@ import { Modal } from "bootstrap";
 import React from "react";
 import axios from "axios";
 import { baseUrl, authorization } from '../config'
-
+import { Row, Col } from 'react-bootstrap'
 class User extends React.Component {
   constructor() {
     super();
@@ -36,6 +36,7 @@ class User extends React.Component {
       password: "",
       role: "",
       action: "",
+      fillPassword: true,
     };
   }
   tambahData() {
@@ -46,9 +47,11 @@ class User extends React.Component {
       nama: "",
       username: "",
       password: "",
-      role: "",
+      role: " ",
       id_user: Math.random(1, 1000),
       action: "tambah",
+      fillPassword: true
+      // harus diisi
     });
     if (!localStorage.getItem("token")) {
       window.location.href = "/login"
@@ -69,8 +72,8 @@ class User extends React.Component {
         password: this.state.password,
         role: this.state.role,
       };
-      let temp = this.state.users;
-      temp.push(newUser);
+      // let temp = this.state.users;
+      // temp.push(newUser);
 
       // this.setState({ users: temp });
       axios.post(endpoint, newUser, authorization)
@@ -81,32 +84,23 @@ class User extends React.Component {
         .catch(error => console.log(error))
     } else if (this.state.action === "ubah") {
       this.modalUser.hide();
-      let endpoint = `${baseUrl}/users/` + this.state.id_user
+      let endpoint = "http://localhost:8000/users/" + this.state.id_user
       let newUser = {
         id_user: this.state.id_user,
         nama: this.state.nama,
         username: this.state.username,
-        password: this.state.password,
         role: this.state.role,
-      };
+      }
+
+      if (this.state.fillPassword === true) {
+        newUser.password = this.state.password
+      }
       axios.put(endpoint, newUser, authorization)
         .then(response => {
           window.alert(response.data.message)
           this.getData()
         })
         .catch(error => console.log(error))
-
-      // mencari posisi index dari data user berdasarkan id_user nya pada array 'users'
-      // let index = this.state.users.findIndex(
-      //   (user) => user.id_user === this.state.id_user
-      // );
-      // let temp = this.state.users;
-      // temp[index].nama = this.state.nama;
-      // temp[index].username = this.state.username;
-      // temp[index].password = this.state.password;
-      // temp[index].role = this.state.role;
-
-      // this.setState({ users: temp });
     }
   }
 
@@ -120,13 +114,14 @@ class User extends React.Component {
       (user) => user.id_user === id_user
     );
     this.setState({
-      id_user: this.state.users[index].id_user,
+      id_user: id_user,
       nama: this.state.users[index].nama,
       username: this.state.users[index].username,
-      password: this.state.users[index].password,
+      password: "",
       action: "ubah",
-      role: "",
-      visible: ""
+      role: this.state.users[index].role,
+      visible: true,
+      fillPassword: false,
     });
   }
 
@@ -139,8 +134,6 @@ class User extends React.Component {
           this.getData()
         })
         .catch(error => console.log(error))
-
-
       // mencari posisi index dari data yang akan dihapus
       // let temp = this.state.users;
       // let index = temp.findIndex((user) => user.id_user === id_user);
@@ -166,7 +159,7 @@ class User extends React.Component {
       role: user.role
     })
     // cara kedua
-    if (user.role === 'admin' || user.role === 'kasir') {
+    if (user.role === 'admin' || user.role === 'Admin') {
       this.setState({
         visible: true
       })
@@ -175,108 +168,131 @@ class User extends React.Component {
         visible: false
       })
     }
-
+    if (user.role !== 'admin') {
+      window.alert(`Maaf anda tidak berhak untuk mengakses halaman ini`)
+      window.location.href = "/"
+    }
   }
+
+
+  showPassword() {
+    if (this.state.fillPassword === true) {
+      return (
+        <div>
+          <span className="details">Password</span>
+
+          <input type="password" className="form-control mb-1 input" required value={this.state.password} minLength={5} maxLength={8}
+            placeholder="5 to 8 Characters" onChange={ev => this.setState({ password: ev.target.value })}>
+
+          </input>
+        </div>
+      )
+    } else {
+      return (
+        <button className="mb-1 btn text-white" id="change-password" onClick={() => this.setState({ fillPassword: true })}
+          minLength={5} maxLength={8} placeholder="5 to 8 Characters">
+          Change Password
+        </button>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="container-fluid" id="style-container">
-        <div className="card">
-          <div className="card-header" id="bg-cardHeader">
-            <h4 className="text-body">List Data User</h4>
+        <Row>
+          <Col>
+            <h4 className="text-center display-2">User Data</h4>
+          </Col>
+        </Row>
+        <div className="card-body">
+          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button
+              id="tambah" className={`btn mx-2.5 mb-3  ${this.state.visible ? `` : `d-none`}`}
+              onClick={() => this.tambahData()}> <i class="fa-solid fa-plus" id="iconTambah"></i>Tambah User </button>
           </div>
-          <div className="card-body">
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button
-                className={`btn btn-success mx-2.5 mb-3  ${this.state.visible ? `` : `d-none`}`}
-                onClick={() => this.tambahData()}> Tambah User </button>
-            </div>
-            <ul className="list-group">
-              {this.state.users.map((user) => (
-                <li className="list-group-item mb-3">
-                  <div className="row" id="style-listGroup">
+          <div className="row">
+            {this.state.users.map((user) => (
+              <div className="col-lg-4">
+                <div className="card" id="cardUser">
+                  <Row>
+                    <div className="col-lg-2" >
+                      <i id="iconUser" class="fa-solid fa-user-group"></i>
+                    </div>
                     {/* bagian untuk nama */}
-                    <div className="col-lg-3">
-                      <small className="text-info">Nama</small> <br />
-                      {user.nama}
+                    <div className="col-lg-3" id="dataUser">
+                      <strong className="judul">Name </strong> <br />
+                      {/* bagian untuk username */}
+                      <strong className="judul">Username</strong><br />
+                      {/* bagian untuk role */}
+                      <strong className="judul">Role </strong>
                     </div>
-                    {/* bagian untuk username */}
-                    <div className="col-lg-3">
-                      <small className="text-info">Username</small> <br />
-                      {user.username}
-                    </div>
-                    {/* bagian untuk password */}
-                    <div className="col-lg-2">
-                      <small className="text-info">password</small> <br />
-                      {user.password}
-                    </div>
-                    {/* bagian untuk role */}
-                    <div className="col-lg-2">
-                      <small className="text-info">role</small> <br />
-                      {user.role}
+                    <div className="col-lg-5" id="dataUser">
+                      <small className="isi"> : {user.nama} </small><br />
+                      <small className="isi"> : {user.username}</small><br />
+                      <small className="isi"> : {user.role}</small>
                     </div>
                     {/* bagian untuk button */}
                     <div className="col-lg-2">
-                      <button
-                        className={`btn btn-warning mx-2 mt-1.75 ${this.state.visible ? `` : `d-none`}`}
-                        onClick={() => this.ubahData(user.id_user)}
-                      >
-                        Ubah
-                      </button>
-                      <button
-                        className={`btn btn-danger mx-2 mt-1.75  ${this.state.visible ? `` : `d-none`}`}
-                        onClick={() => this.hapusData(user.id_user)}
-                      >
-                        Hapus
-                      </button>
+                      <div className="ubahHapus">
+                        <button
+                          id="ubah" className={`btn  ${this.state.visible ? `` : `d-none`}`}
+                          onClick={() => this.ubahData(user.id_user)}>
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button
+                          id="delete" className={`btn mt-3 mb-3 ${this.state.visible ? `` : `d-none`}`}
+                          onClick={() => this.hapusData(user.id_user)}>
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </Row>
+                </div>
+              </div>
+            ))}
           </div>
+
 
           {/* form modal user */}
           <div className="modal" id="modal-user">
             <div className="modal-dialog modal-md">
               <div className="modal-content">
-                <div className="modal-header" id="bg-cardHeaderForm">
+                <div className="modal-header" id="container-user">
                   <h4 className="text-body">Form User</h4>
                 </div>
                 <div className="modal-body">
                   <form onSubmit={(ev) => this.simpanData(ev)}>
-                    Nama
-                    <input
-                      type="text"
-                      className="form-control mb-2"
-                      value={this.state.nama}
-                      onChange={(ev) => this.setState({ nama: ev.target.value })}
-                    />
-                    Username
-                    <input
-                      type="text"
-                      className="form-control mb-2"
+                    <div className="user-detail">
+
+                      <span className="details">Name</span>
+                      <input required
+                        type="text"
+                        className="form-control mb-2 input"
+                        value={this.state.nama} placeholder="5 to 14 characters" maxLength={14} minLength={5}
+                        onChange={(ev) => this.setState({ nama: ev.target.value })}
+                      />
+                    </div>
+                    <span className="details">Username</span>
+                    <input required
+                      type="text" placeholder="3 to 5 characters" minLength={3} maxLength={5}
+                      className="form-control mb-2 input"
                       value={this.state.username}
                       onChange={(ev) =>
                         this.setState({ username: ev.target.value })
                       }
                     />
-                    Password
-                    <input
-                      type="text"
-                      className="form-control mb-2"
-                      value={this.state.password}
-                      onChange={(ev) =>
-                        this.setState({ password: ev.target.value })
-                      }
-                    />
+                    {this.showPassword()} <br></br>
+
                     Role
-                    <select
+                    <select required
                       className="form-control mb-2"
                       value={this.state.role}
                       onChange={(ev) => this.setState({ role: ev.target.value })}>
-                      <option value="Kasir">Kasir</option>
-                      <option value="Admin">Admin</option>
-                      <option value="Owner">Owner</option>
+                      <option value="">Pilih Role</option>
+                      <option value="kasir">Kasir</option>
+                      <option value="admin">Admin</option>
+                      <option value="owner">Owner</option>
                     </select>
                     <button className="btn btn-success btn-sm" type="submit">
                       Simpan

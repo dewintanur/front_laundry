@@ -1,6 +1,9 @@
 import React from "react"
 import axios from "axios"
-
+import './login.css'
+import loginn from "../img/log.png"
+import background from '../img/abstract-139.png'
+import { Row,Col,Image, Form, Button } from 'react-bootstrap'
 class Login extends React.Component {
     constructor() {
         super()
@@ -9,7 +12,6 @@ class Login extends React.Component {
             password: ""
         }
     }
-
     loginProcess(event) {
         event.preventDefault()
         let endpoint = "http://localhost:8000/api/auth"
@@ -25,8 +27,8 @@ class Login extends React.Component {
                     localStorage.setItem(
                         "user", JSON.stringify(result.data.user)
                     )
-
-                    window.alert("Happy Laundry:)")
+                    let halo = JSON.parse(localStorage.getItem(`user`));
+                    window.alert(`Selamat datang ${halo.role}:)`)
                     window.location.href = "/"
 
                 } else {
@@ -37,97 +39,39 @@ class Login extends React.Component {
     }
     render() {
         return (
+            <div className="backgroundd">
             <div className="container">
-                <div className="col-lg-6" style={{ margin: " 0 auto " }}>
-                    <div className="card">
-                        <div className="card-header bg-danger">
-                            <h4 className="text-white"> Login</h4>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={ev => this.loginProcess(ev)}>
-                                Username
-                                <input type="text" className="form-control mb-2"
+                <Row id="">
+                    <Col>
+                            <h1 class="display-1" id="judul">Sign <span id="juduL">In</span></h1>
+                        <Form className="formLogin" onSubmit={ev => this.loginProcess(ev)}>
+                            <Form.Group>
+                                <Form.Label id="form-label"> Username</Form.Label>
+                                <Form.Control type="text" id="text" className="form-control mb-2"
                                     required value={this.state.username}
                                     onChange={ev => this.setState({ username: ev.target.value })}
+                                    placeholder="Type your username"
                                 />
-
-                                Password
-                                <input type="password" className="form-control mb-2"
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label id="form-label"> Password</Form.Label>
+                                <Form.Control type="password" id="password" className="form-control mb-2"
                                     required value={this.state.password}
                                     onChange={ev => this.setState({ password: ev.target.value })}
+                                    placeholder="Type your password"
                                 />
-
-                                <button type="submit" className="btn btn-danger">
-                                    Log In
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </Form.Group>
+                            <Button type="submit" id="btnLogin">Submit</Button>
+                        </Form>
+                    </Col>
+                    <Col>
+                        <Image src={loginn} thumbnail style={{ border: "none" }}></Image>
+                    </Col>
+                </Row>
+            </div >
+        </div>
         )
     }
+
 }
 export default Login
-// import axios from "axios";
-// import React from "react";
-// import "./login.css"
-// class Login extends React.Component {
-//     constructor() {
-//         super()
-//         this.state = {
-//             username: "",
-//             password: ""
-//         }
-//     }
-//     loginProcess(event) {
-//         event.preventDefault()
-//         let endpoint = "http://localhost:8000/api/auth"
-//         let request = {
-//             username: this.state.username,
-//             password: this.state.password
-//         }
-//         axios.post(endpoint, request)
-//             .then(result => {
-//                 if (result.data.logged) {
-//                     // menyimpan token di local storage
-//                     localStorage.setItem("token", result.data.token)
-//                     window.alert("Login Berhasil")
-//                     window.location.href = "/member"
-//                 } else {
-//                     window.alert("Sorry, Your username and passwond is wrong, TRY AGAIN!")
-//                 }
-//             })
-//             .catch(error => console.log(error))
-//     }
-
-//     render() {
-//         return (
-//             <div className="global-container">
-//                 <div className="col-lg-6" style={{ margin: " 0 auto" }}>
-//                     <div className="card-">
-//                         <div className="card-header">
-//                             <h4 className="text-body">Login</h4>
-//                         </div>
-//                         <div className="card-body">
-//                             <form onSubmit={ev => this.loginProcess(ev)}>
-//                                 Username
-//                                 <input type="text" className="form-control mb-2" required value={this.state.username}
-//                                     onChange={ev => this.setState({ username: ev.target.value })} />
-
-//                                 Password
-//                                 <input type="password" className="form-control mb-2" required value={this.state.password}
-//                                     onChange={ev => this.setState({ password: ev.target.value })} />
-//                                 <div class="d-grid gap-2">
-//                                     <button type="submit" className="btnn">Log In</button>
-//                                 </div>
-//                             </form>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
-
-// export default Login

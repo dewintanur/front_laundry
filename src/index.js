@@ -14,22 +14,13 @@ import FormTransaksi from './pages/formTransaksi';
 
 import "bootstrap/dist/css//bootstrap.css"
 import "bootstrap/dist/js/bootstrap.bundle"
-
+import '@fortawesome/fontawesome-free/css/all.min.css'
 import Login from "./pages/login"
 
 ReactDOM.render(
   // Routing,
   <React.StrictMode>
-    {/* <Trial title="Hallo Mokleters" subtitle=""/>
-    <Trial title="Hallo HAI" subtitle="OMAYGAT"/>
-    <Trial title="Hallo HIHI"/> */}
     <App />
-    {/* <Login /> */}
-    {/* <Member/> */}
-    {/* <User /> */}
-    {/* <Paket /> */}
-    {/* <Transaksi /> */}
-    {/* <FormTransaksi/> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

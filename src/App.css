@@ -1,96 +1,683 @@
-#bg-cardHeader{
-  background-color: #f6d7a7;
+@import url('https://fonts.googleapis.com/css2?family=Amaranth&family=Be+Vietnam+Pro:wght@300&family=Carter+One&family=Dangrek&family=Hubballi&family=Kaisei+Decol&family=M+PLUS+1p:wght@300&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:wght@400;500&family=Orelega+One&family=Otomanopee+One&display=swap');
+
+/* navbar */
+.nav-item .active{
+color:#c48629 !important;
 }
-#bg-cardHeaderForm{
-  background-color: #FFAD60;
-  font-style: oblique;
+ .nav-link:hover{
+color: #c48629 !important;
 }
-#style-listGroup{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-weight: bold;
+.nav-link{
+/* color: black !important; */
+font-weight: 500;
 }
-#style-container{
+
+/* font listgrup*/
+#style-listGroup,
+#style-listGroupTrans {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* transaksi */
+#statusBelum {
+  background-color: #8A8635;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(128, 119, 119);
+
+}
+
+#statusSudah {
+  background-color: #dacf0c;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(128, 119, 119);
+
+}
+
+#iconBayar {
+  font-size: 12pt;
+  padding-left: 5pt;
+}
+
+#transBaru {
+  background-color: #ae421e;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(128, 119, 119);
+}
+
+#transProses {
+  background-color: #e0bf3b;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(128, 119, 119);
+}
+
+#transSiap {
+  background-color: #a88a57;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(128, 119, 119);
+}
+
+#transTelah {
+  background-color: #8cbb46;
+  font-family: 'Hubballi', cursive;
+  font-size: 12pt;
+  text-shadow: 1px 1px 1px rgb(65, 60, 60);
+}
+#btn-struk {
+  background-color: #b9c95ed7;
+  border-radius: 10px;
+  font-family: 'Hubballi', cursive;
+  font-size: 15pt;
+  padding: 3px;
+  color:white;
+  text-shadow: 1px 1px 1px rgb(65, 60, 60);
+}
+/* mengatur posisi dari container member, user, dan paket */
+#style-container {
   padding-top: 10pt;
+  padding-right: 10pt;
+  padding-left: 10pt;
+  padding-bottom: 10pt ;
 }
-#style-listGroupTrans{
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+/* placeholder */
+:placeholder-shown{
+  font-style: italic;
+  font-size: 2pt;
 }
-.bg-nAvbar{
+/* navbar */
+#myNav {
+  font-family: 'Montserrat', sans-serif;
+}
+.bg-nAvbar {
   background-color: #96CEB4;
 }
-#ubah{
+
+#navbar {
+  color: black;
+  font-family: serif;
+  font-size: large;
+  font-weight: 100;
+}
+
+
+/* bagian ubah,delete dan hapus */
+#ubah {
   background-color: #F6D860;
+  color: black;
+  border-radius: 30px;
+  font-size: 20px;
 }
-#delete{
+#ubah:hover{
+  background-color: #f6d860b0;
+}
+
+#delete {
   background-color: #EA5C2B;
+  color: whitesmoke;
+  border-radius: 30px;
+  font-size: 19px;
+  margin-right: 10px;
+
 }
-#tambah{
+#delete:hover{
+  background-color: #ea5b2ba9;
+}
+#tambah {
   background-color: #95CD41;
+  color: rgb(83, 24, 24);
+  border-radius: 30px;
 }
-.logo{
+#tambah:hover{
+  background-color:#8cbb46;
+}
+#iconTambah{
+  padding-right: 5px;
+}
+
+/* gambar logo eia */
+.logo {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-style: oblique;
   font-weight: bolder;
 }
+
 img {
-  width: 80%;
-  height: 50px;
+  width: 100%;
+  height: 40px;
   object-fit: cover;
-  margin-left: 15pt;
-}
-.bg-pAket{
-  background-color: #D06224;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.bg-mEmber{
-  background-color: #E9C891;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.bg-tRansaksi{
-  background-color: #AE431E;
-}
-.bg-incomE{
-  background-color:#8A8635;
-}
-/* .App {
-  width: 100vw;
-  height: 100vh;
-} */
-/* .App {
-  text-align: center;
+  margin-left: 10pt;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* dashboard */
+.bg-pAket {
+  background-color: #ee7128;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: rgb(0, 0, 0);
+  border-radius: 15pt;
+  border-color: transparent;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  box-shadow: 4px 3px 3px 3px #bd5b23;
+
 }
 
-.App-link {
-  color: #61dafb;
+.bg-mEmber {
+  background-color: #da562a;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: black;
+  border-radius: 15pt;
+  border-color: transparent;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 4px 3px 3px 3px rgb(156 61 30 / 90%);
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bg-tRansaksi {
+  background-color: #b8b049;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  border-radius: 15pt;
+  border-color: transparent;
+  color: rgb(0, 0, 0);
+  justify-content: center;
+  text-align: center;
+  box-shadow: 4px 3px 3px 3px rgb(124 119 48 / 80%);
+
+
+
+}
+
+.bg-incomE {
+  background-color: #ffdca0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  border-radius: 15pt;
+  border-color: transparent;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 40pt;
+  margin-right: 20pt;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 4px 3px 3px 3px rgb(168 143 101 / 80%)
+}
+
+#dashboard {
+  padding-top: 80px;
+  margin-left: 30pt;
+  margin-right: 30pt;
+
+}
+
+#iconMember {
+  color: rgb(0, 0, 0);
+  font-size: 30pt;
+}
+
+.imgLP {
+  width: 80%;
+  height: 80%;
+  position: relative;
+  margin-top: 40px;
+}
+.col-imgLP{
+  margin: 0pt;
+}
+#textDB {
+  margin:50px;
+  margin-top: 20pt;
+}
+
+#tambahTransaksi {
+  color: rgb(196, 134, 41);
+  text-decoration: none;
+}
+
+#btnTambahTrans {
+  width: 200px;
+  height: 60px;
+  font-size: 25px;
+  background-color: #f6d860;
+  border-color: #F6D860;
+  margin-left: 48px;
+  text-shadow: 1px 1px 1px rgb(88, 82, 82);
+}
+#btnTambahTrans:hover {
+  background-color: rgba(246, 216, 96, 0.644);
+  border-color:#ccb14400;
+}
+
+
+
+/* file member */
+.formStyle {
+  background-color: rgb(233, 200, 145);
+  font-family: 'Merriweather',
+    serif;
+  color: black;
+}
+#icnMember{
+   padding-left: 15px;
+   padding-top: 15px;
+   padding-bottom: 15px;
+   padding-right: 15px;
+   font-size: 30px;
+   color: #855707;
+   border-color: black;
+   background-color: rgba(247, 202, 21, 0.5);
+   border-radius: 45px;
+   margin: 15px;
+   margin-top: 35px;
+   margin-bottom: 30px;
+}
+#dataMember {
+  margin-top: 28px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+#cardMember {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  box-shadow: 4px 3px 3px 3px rgba(250 200 2 / 60%);
+  border-color: burlywood;
+}
+/* file paket */
+#cardPaket {
+  width: 410px;
+  height: 80px;
+  border-color: #E9C891;
+  box-shadow: 5px 5px 5px 0px rgb(204, 194, 52);
+  margin: 10px;
+  margin-left: 130px;
+  padding-right: 8px;
+}
+#tambahPaket {
+  background-color: #95CD41;
+  color: rgb(83, 24, 24);
+  border-radius: 30px;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+#tambahPaket:hover{
+    background-color:#8cbb46;
+}
+#iconBaju {
+  font-size: 25px;
+  color: rgba(196, 155, 119, 0.8);
+  background-color: rgb(224 191 59 / 50%);
+  border-radius: 50px;
+  padding: 8px;
+  margin: 20px 15px 30px 15px;
+}
+.row-paket{
+  padding-top: 10px;
+}
+#tambahPaket{
+  margin-right: 50px;
+}
+.background {
+  background: linear-gradient(90deg, #FFFF 50%, rgb(246 216 96 / 50%) 50%);
+  padding-bottom: 100px;
+}
+.text-paket{
+  font-size: 20px;
+}
+.paket-harga{
+  font-size: 18px;
+  margin-left: 5px;
+  /* text-shadow: 1px 3px 2px rgb(174 66 30 / 50%); */
+}
+.kg{
+  font-size: small;
+}
+/* file User */
+#cardUser{
+  width: 420px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+  box-shadow: 4px 3px 3px 3px rgb(246 216 96 / 50%);
+  border-color: burlywood;
+}
+#iconUser{
+  padding: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 25px;
+  color: #a88a57;
+  border-color: black;
+  background-color: rgb(224 191 59 / 50%);
+  border-radius:  45px;
+  margin-right: 15px;
+  margin-left: 5px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+#dataUser{
+  margin-top: 15px;
+  padding-left: 10px;
+  padding-right: 0px;
+  margin-bottom: 15px;
+
+}
+.isi{
+  padding-left: 5px;
+  font-size: 16px;
+}
+.judul{
+  font-size: 16px;
+}
+.ubahHapus{
+  margin-right: 6px;
+  margin-top: 5px;
+  margin-right: 3px;
+}
+
+
+/* file FormTransaksi */
+  .bg-formTrans{
+background-color: #302a26;
+padding: 35px;
+padding-top: 40px;
+padding-bottom: 20px;
+}
+.container-trans{
+  max-width: 800px;
+  width: 100%;
+  background-color: #f8f8f8;
+  margin: 20pt 220pt;
+  /* margin-bottom: 0pt; */
+  padding-top: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 13px;
+  border-radius: 5px;
+}
+.title{
+  font-size: 25px;
+  font-weight:500;
+  position: relative;
+}
+.title::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  background: linear-gradient(135deg, #E9C891, #D06224);
+}
+.trans-detail{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.input-box{
+  /* margin: 10px; */
+  width: calc(100% / 2 - 20px);
+
+}
+.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.trans-detail .input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  /* margin: 10px; */
+}
+.btn-paket{
+  height: 45px;
+  width: 500px;
+  margin: 45px 0;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+.btn-paket .simpan {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: #fff;
+  border:none;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  background: linear-gradient(120deg, #D06224, #8d3011);
+  margin-left: 150px;
+}
+#tambahPaket {
+  background-color: #95CD41;
+  /* color: rgb(83, 24, 24); */
+  color: #fff;
+  font-size: 16px;
+  border-radius: 15px;
+  padding-right: 10px;
+  margin-top: 30px;
+  border-color: #95CD41;
+}
+
+.bg-secondary{
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+}
+
+/* formMember */
+#container-member {
+  max-width: 800px;
+  width: 100%;
+  background-color: rgb(208 98 36 / 50%);
+  /* margin: 10pt 0pt; */
+  /* padding: 20px; */
+  border-radius: 5px;
+}
+.member-details .member-title{
+  font-size: 20px;
+  font-weight: 500;
+}
+.member-details .category{
+  display:flex;
+  width: 80%;
+  margin: 14px 0;
+  justify-content: space-between;
+}
+.member-details .category label{
+  display: flex;
+  align-items: center;
+}
+.member-details .category .dot{
+  height: 18px;
+  width: 18px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+#dot-1:checked ~ .category label .one,
+#dot-2:checked~.category label .two{
+  border-color: #d9d9d9;
+  background-color: #9b509b;
+}
+
+input[type="radio"]{
+  display: none;
+}
+.detail{
+  margin-top: 10px;
+}
+
+/* formUser */
+#container-user {
+  max-width: 800px;
+  width: 100%;
+  background-color: rgb(208 98 36 / 50%);
+  /* margin: 10pt 0pt; */
+  /* padding: 20px; */
+  border-radius: 5px;
+}
+#change-password{
+  background-color: #619415;
+}
+.user-details .user-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.role-details .category {
+  display: flex;
+  width: 80%;
+  margin: 14px 0;
+  justify-content: space-between;
+}
+
+.role-details .category label {
+  display: flex;
+  align-items: center;
+}
+
+.role-details .category .dot {
+  height: 18px;
+  width: 18px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#dot-1:checked~.category label .one,
+#dot-2:checked~.category label .two,
+#dot-3:checked~.category label .three {
+  border-color: #d9d9d9;
+  background-color: #9b509b;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+
+/* formPaket */
+#container-paket {
+  max-width: 800px;
+  width: 100%;
+  background-color: rgb(208 98 36 / 50%);
+  /* margin: 10pt 0pt; */
+  /* padding: 20px; */
+  border-radius: 5px;
+}
+
+.paket-details .paket-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+
+/* transaksi */
+#card-tabel{
+  margin-top: 20px;
+  margin-left: 65px;
+  /* margin-right: 60px; */
+  /* max-width: 1000px; */
+  width: 90%;
+  box-shadow: 4px 3px 3px 3px rgba(181, 230, 6, 0.5);
+  border-color: burlywood;
+}
+#tabel-trans{
+  margin-top: 20px;
+  margin-left: 30px;
+  border-color: transparent;
+}
+#tbl-member{
+  padding-left: 0px;
+}
+#tbl-order{
+  padding-left: 50px;
+}
+#tbl-pay{
+  padding-left: 100px;
+}
+#btn-struk {
+  background-color: #8cbb46;
+  color: whitesmoke;
+  border-radius: 10px;
+}
+
+#btn-struk:hover {
+  background-color: #bee682;
+}
+#delete-trans {
+  background-color: #EA5C2B;
+  color: whitesmoke;
+  border-radius: 10px;
+  font-size: 19px;
+}
+#searching{
+  margin-left: 65px;
+}
+#cetakLaporan{
+  margin-right: 20px;
+}
+#delete-trans:hover {
+  background-color: #ea5b2ba9;
+}
+#detail-transaksi{
+  margin-left: 30px;
+}
+#tbl-detail{
+  margin-left: 50px;
+  width: 90%;
+}
+#tbl-action{
+  padding-left: 60px;
+}
+#id-trans{
+  margin-top: 20px;
+  margin-left: 30px;
+}
+.img-struk {
+  width: 150px;
+  height: 60px;
+  /* object-fit: cover; */
+  margin-left: 20pt;
+}
+#id-struk{
+  /* margin-left: 50pt; */
+  justify-content: end;
+  padding-left: 400pt;
+  padding-top: 10pt;
+  /* font-family: 'Be Vietnam Pro',sans-serif; */
+}
+/* .struk{
+  font-family: 'Montserrat',serif;
 } */
+/* cetak struk */
+#cetak-struk{
+  font-family: 'Montserrat',
+  sans-serif;
+  font-size: 26px;
+  margin-top: 50px;
+}
+#ctk-member{
+  font-family: 'Montserrat',sans-serif;
+  font-size: 26px;
+  margin-top: 80px;
+  /* margin-bottom: 20px; */
+}
+#ctk-tgl {
+  font-family: 'Montserrat', sans-serif;
+}
